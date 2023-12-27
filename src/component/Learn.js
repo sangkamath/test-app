@@ -44,7 +44,7 @@ const Learn = (props) => {
                 Data && Data.map((credit, i) => {
                     return (
                         <div key={i}>
-                            <Grid container justifyContent="flex-end">
+                            <Grid container justifyContent="center" sx={{pt:5}}>
                                 <Item>
                                     <Typography variant="h5" gutterBottom component="div">
                                         The information above was gotten from the following sources
