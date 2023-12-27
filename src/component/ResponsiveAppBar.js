@@ -81,7 +81,7 @@ export default function ResponsiveAppBar() {
     const getDrawerChoices = () => {
         return linkDetails.map(({ displayName, href }) => {
             return (
-                <Link component={RouterLink} to={href} sx={{ color: "black" }}>
+                <Link key={href} component={RouterLink} to={href} sx={{ color: "black" }}>
                     <MenuItem>{displayName}</MenuItem>
                 </Link>
             )

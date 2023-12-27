@@ -9,6 +9,7 @@ import { Box, Card, CartContent, Button, Grid, Radio, RadioGroup, FormControlLab
 const Quiz = (props) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [chosenAnswer, setChosenAnswer] = useState("");
+    const [ questionsAnswered, setQuestionsAnswered] = useState(Array(Quest.length).fill(0))
     const [score, setScore] = useState(0);
     const [end, setEnd] = useState(false);
     const [clickedAnswer, setClickedAnswer] = useState(false);
@@ -21,10 +22,20 @@ const Quiz = (props) => {
     const checkCorrectAnswer = () => {
         if (chosenAnswer === Quest[currentQuestion].correctAnswer) {
             setScore(score + 1);
+            let array = questionsAnswered;
+            array[currentQuestion] = 1;
+            setQuestionsAnswered(array);
+        } else {
+            let array = questionsAnswered;
+            array[currentQuestion] = 0;
+            setQuestionsAnswered(array);
         }
     }
 
     const finished = () => {
+        checkCorrectAnswer();
+        const sum =  questionsAnswered.reduce((partialSum, a) => partialSum + a, 0);
+        setScore(sum);
         if (currentQuestion === Quest.length - 1) {
             setEnd(true);
         }
@@ -41,9 +52,18 @@ const Quiz = (props) => {
         setScore(0);
     }
 
+    const previous = () => {
+        setCurrentQuestion(currentQuestion - 1);
+        checkCorrectAnswer();
+    }
+
+    const next = () => {
+        setCurrentQuestion(currentQuestion + 1);
+        checkCorrectAnswer();
+        reset();
+    }
+
     let navigate = useNavigate();
-    console.log(Quest);
-    console.log(Quest[currentQuestion].question);
 
 
     let content = "";
@@ -78,7 +98,7 @@ const Quiz = (props) => {
                             <CardContent>
                                 <Typography variant="body1" gutterBottom component="div" textAlign="center">
                                     <span>
-                                        {`${currentQuestion}/${Quest.length}`}
+                                        {`${currentQuestion + 1}/${Quest.length}`}
                                     </span>
                                     <br></br>
                                     {Quest[currentQuestion].question}
@@ -110,10 +130,7 @@ const Quiz = (props) => {
                                         {currentQuestion >= Quest.length - 9 && (
                                             <Button variant="contained" color="error" sx={{float: "left", m:2}}
                                                 onClick={
-                                                    () => {
-                                                        setCurrentQuestion(currentQuestion - 1);
-                                                        checkCorrectAnswer();
-                                                    }
+                                                    () => previous()
                                                 }>
                                                 Previous
                                             </Button>
@@ -121,11 +138,7 @@ const Quiz = (props) => {
                                         {currentQuestion < Quest.length -1 && (
                                             <Button variant="contained" color="error"  sx={{float: "right",  m:2}} display=
                                             "block" onClick={
-                                                () => {
-                                                    setCurrentQuestion(currentQuestion + 1);
-                                                    checkCorrectAnswer();
-                                                    reset();
-                                                }
+                                                () => next()
                                             }>
                                                 Next
                                             </Button>
