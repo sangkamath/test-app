@@ -58,10 +58,10 @@ const Quiz = (props) => {
                         {`Good Work! Your Final Score is ${score}/${Quest.length}`}
                     </Typography>
                     <div sx={{ p: 20 }}>
-                        <Button variant="contained" color="error" onClick={() => startOver()}>
+                        <Button variant="contained" color="error" sx={{m:2 }} onClick={() => startOver()}>
                             Start Over
                         </Button>
-                        <Button variant="contained" color="error" onClick={() => navigate("/")}>
+                        <Button variant="contained" color="error" sx={{m:2 }}  onClick={() => navigate("/")}>
                             Go Home
                         </Button>
                     </div>
@@ -105,9 +105,10 @@ const Quiz = (props) => {
                                     </FormControl>
                                 ))}
                                 {clickedAnswer && (
+                                    <Grid justify="space-between"> 
                                     <div>
                                         {currentQuestion >= Quest.length - 9 && (
-                                            <Button variant="contained" color="error"
+                                            <Button variant="contained" color="error" sx={{float: "left", m:2}}
                                                 onClick={
                                                     () => {
                                                         setCurrentQuestion(currentQuestion - 1);
@@ -118,7 +119,7 @@ const Quiz = (props) => {
                                             </Button>
                                         )}
                                         {currentQuestion < Quest.length -1 && (
-                                            <Button variant="contained" color="error" display=
+                                            <Button variant="contained" color="error"  sx={{float: "right",  m:2}} display=
                                             "block" onClick={
                                                 () => {
                                                     setCurrentQuestion(currentQuestion + 1);
@@ -130,12 +131,14 @@ const Quiz = (props) => {
                                             </Button>
                                         )}
                                         {currentQuestion === Quest.length - 1 && (
-                                            <Button variant="contained" colo="error" display="block" 
+                                            <Button variant="contained" colo="error" sx={{float: "right",  m:2}}  display="block" 
                                             onClick={ () => finished()}>
                                                 FINISH
                                             </Button>
                                         )}
+
                                     </div>
+                                    </Grid>
                                 )}
                             </Box>
                         </Card>
